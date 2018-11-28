@@ -18,4 +18,18 @@ router.post('/', function (req, res){
         })
 });
 
+router.put('/', function (req, res){
+    User.findOneAndUpdate(
+        {username: req.body.username,
+        password: req.body.oldPassword},
+        {$set:{password: req.body.newPassword}},
+        function (err, doc){
+            console.log(err);
+            if (err) return res.status(500).send("Something wrong when updating data!");
+
+            res.status(200).send(doc);
+        }
+    )
+});
+
 module.exports = router;
